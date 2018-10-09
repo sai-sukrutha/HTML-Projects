@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Try it Yourself!</title>
+
+<!--JQuery-->
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!--Bootstrap-->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<style>
+
+    html, body {
+	    height: 100%;
+	    margin: 0;
+    }
+
+    .main-container {
+	    position: relative;
+	    overflow: hidden;
+	    width: 100%;
+	    height: 100%;
+	    padding-top: 3%;
+    }
+
+    .page-header{
+    	margin-top: 0;
+    }
+
+    .header{
+    	margin-top: 0;
+    }
+
+    #heading{
+    	background-color: #00e600;
+    	color: white;
+    	margin-top: 0;
+    }
+
+    #sec_heading
+    {
+    	font-size:5;
+    	color:white;
+    }
+ 
+    .table-container
+    {
+    	position: relative;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    border: 1;
+	    border-width: 3;
+	    padding: 5;
+    }
+
+    .iframe {
+	    position: relative;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    border: 1;
+    }
+
+    .textarea-container
+    {
+    	position: relative;
+    	width: 100%;
+    	height: 100%;
+
+    }
+
+    .code-textarea
+    {
+    	position: relative;
+    	width: 100%;
+    	height: 100%;
+    }
+
+    .btn
+    {
+    	padding-bottom: 2;
+    	padding-left: 5;
+    	padding-right: 5;
+    }
+
+</style>
+
+</head>
+<body>
+	<div class="header" id="heading">
+        <h1 class="page-header" align="center">Try it Yourself!  <small id="sec_heading">HTML Editor</small></h1>
+    </div>
+
+	<div class="main-container">
+		<table class="table-container" cellpadding="0px" cellspacing="0px">
+			<tr>
+				<td>
+					<div class="button-container">
+						<button type="button" class="btn btn-success" btn-md onclick="runCode()">Run</button>
+						<button type="button" class="btn btn-success" btn-md onclick="clear_text()">Clear</button>
+					</div>
+					<div class="textarea-container">
+						<textarea  class="code-textarea" id="codetextarea" scrolling="auto" placeholder="#Type your code here..and Run to see the magic"></textarea>
+				    </div>
+				</td>
+				<td>
+					<div class="button-container">
+						<button type="button" class="btn btn-success" btn-md onclick="clear_html()">Clear</button>
+					</div>
+				    <iframe class="iframe" id="iframe" scrolling="yes" allowfullscreen>
+				         Sorry your browser does not support inline frames.
+				    </iframe>
+				</td>
+		    </tr>
+		</table>
+   </div>
+
+   <script type="text/javascript">
+		function runCode()
+		{
+			console.log("Run Button Clicked");
+			var text=document.getElementById("codetextarea").value;
+			console.log(text);
+
+            document.getElementById('iframe').contentWindow.document.open();
+            document.getElementById('iframe').contentWindow.document.write(text);
+            document.getElementById('iframe').contentWindow.document.close();
+		}
+
+		function clear_text()
+		{
+			console.log("Clear Text Button Clicked");
+			document.getElementById("codetextarea").value="";
+		}
+
+
+		function clear_html()
+		{
+			var html="";
+			console.log("Clear Html Button Clicked");
+
+			document.getElementById('iframe').contentWindow.document.open();
+            document.getElementById('iframe').contentWindow.document.write(html);
+            document.getElementById('iframe').contentWindow.document.close();
+        }
+
+    </script>
+
+</body>
+</html>

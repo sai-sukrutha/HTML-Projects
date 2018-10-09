@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clock</title>
+
+<!--JQuery-->
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!--Bootstrap-->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<style type="text/css">
+
+    html, body {
+	    background-color: #b3b3b3;
+	    margin: 0;
+	    padding: 0;
+    }
+
+    .clock{
+    	position: absolute;
+    	top: 50%
+    	left: 50%;
+    	transform: translate(50%,5px);
+    	width:50%;
+    	border: 30px solid black;
+    	border-radius: 50%;
+    	box-shadow: 0 0 0 5px black, inset 0px 0px 30px black;
+    	/*background-color: white;*
+    	color:black;*/
+    	background-image: url('colors.png');
+    	color:black;
+    }
+
+    /*.clock:before {
+	  content: " ";
+	  position: absolute;
+	  z-index: -1;
+	  top: 5px;
+	  left: 5px;
+	  right: 5px;
+	  bottom: 5px;
+	  border: 3px solid #0099cc;
+	  border-radius: 50%;
+	}*/
+
+    /*For responsive circle*/
+	.clock:after{
+	    content: "";
+	    display: block;
+	    padding-bottom: 100%;
+	}
+
+	#hour_hand{
+		width:1px;
+		height: 30%;
+		position: absolute;
+		top: 25%;
+		left: 50%;
+        transform-origin: 50% 80%;
+        border : 4px solid black;
+        border-radius: 50%
+	}
+
+	#min_hand{
+		width:1px;
+		height: 45%;
+		position: absolute;
+		top: 13%;
+		left: 50%;
+        transform-origin: 50% 80%;
+        border : 4px solid black;
+        border-radius: 50%
+	}
+
+	#sec_hand{
+		width:1px;
+		height: 50%;
+		position: absolute;
+		top: 10%;
+		left: 50%;
+        transform-origin: 50% 80%;
+        border : 3px solid white;
+        border-radius: 50%
+	}
+
+	#num12-container{
+		height: 60%;
+		width: 60%;
+		position:absolute;
+		top: 1%;
+		left:42%;
+	}
+
+	#num12{
+		height: 30%;
+		width: 30%;
+		position: absolute;
+		top: 12%
+		left: 80%;
+	}
+
+	#num9-container{
+		height: 50%;
+		width: 50%;
+		position:absolute;
+		top: 42%;
+		left:2%;
+	}
+
+	#num9{
+		height: 30%;
+		width: 30%;
+		position: absolute;
+		top: 12%
+		left: 80%;
+	}
+
+	#num3-container{
+		height: 50%;
+		width: 50%;
+		position:absolute;
+		top: 41%;
+		left:83%;
+	}
+
+	#num3{
+		height: 30%;
+		width: 30%;
+		position: absolute;
+		top: 12%
+		left: 80%;
+	}
+
+	#num6-container{
+		height: 50%;
+		width: 50%;
+		position:absolute;
+		top: 83%;
+		left: 44%;
+	}
+
+	#num6{
+		height: 30%;
+		width: 30%;
+		position: absolute;
+		top: 12%
+		left: 80%;
+	}
+
+	/*#center-piece{
+		display: block;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		background: #0099cc;
+		width: 5%; 
+		height: 5%;
+		border-radius: 50%
+	}*/
+
+	p{
+		text-align: right;
+		padding-right: 10px;
+		font-family: Ubuntu;
+	}
+	
+	#time{
+		font-size: 14px;
+		font-family: Ubuntu;
+	}
+
+</style>
+</head>
+
+<body onload="updateTime()" >
+
+	<div class="clock">
+        <!--
+		<div id="num12-container">
+			<img src="12.png" id="num12" alt="12">
+		</div>
+		<div id="num3-container">
+			<img src="3.png" id="num3" alt="3">
+		</div>
+		<div id="num9-container">
+			<img src="9.png" id="num9" alt="9">
+		</div>
+		<div id="num6-container">
+			<img src="6.png" id="num6" alt="6">
+		</div>
+	    -->
+
+		<div id="hour_hand"></div>
+		<div id="min_hand"></div>
+		<div id="sec_hand"></div>
+
+	</div>
+    
+    <p>Time for Reference: </p>
+	<p id="time" ></p>
+
+    <script type="text/javascript">
+    
+	function updateTime()
+	{
+		var time=new Date();
+		var hour=time.getHours();
+		var mins=time.getMinutes();
+		var secs=time.getSeconds();
+		//console.log(' '+hour+' '+mins+' '+secs);
+		document.getElementById('time').innerHTML=' '+hour+' : '+mins+' : '+secs;
+
+		var h_hand=document.getElementById('hour_hand').style;
+		var m_hand=document.getElementById('min_hand').style;
+		var s_hand=document.getElementById('sec_hand').style;
+
+		s_hand.transform='rotate('+secs*6+'deg)';
+		m_hand.transform='rotate('+mins*6+'deg)';
+		h_hand.transform='rotate('+(hour*30+mins*0.5)+'deg)';
+
+	}
+
+	setInterval(updateTime,1000);
+
+</script>
+
+</body>
+</html>

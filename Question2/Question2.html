@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>xkcd</title>
+
+<!--Bootstrap-->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<style>
+
+   html,body{
+        background-color: #77cbd4;
+        color: white;
+   }
+
+   .jumbotron{
+        color: black;
+		padding-top: 1px;
+		padding-bottom:1px;
+		height: 150px;
+		border: 2px;
+		border-color: black;
+		border-style: solid;
+   }
+
+   .panel{
+   	    padding-top: 1px;
+		padding-bottom:1px;
+   	    /*height: 100%;*/
+   	    border: 2px;
+		border-color: black;
+		border-style: solid;
+		color: black;
+   }
+
+   .buttons{
+   	    color: white;
+   	    padding-top: 3px;
+		padding-bottom:3px;
+		text-align: center;
+   }
+
+   .btn{
+   	    background-color: #666699;
+   	    border: 1px;
+		border-color: black;
+		border-style: solid;
+    }
+
+    .btn:hover, .btn:active, .btn:focus {
+	    color: #ffffff !important;
+	    background-color: #666699 !important;
+	    border: 1px;
+		border-color: black;
+		border-style: solid;
+	}
+
+   #image{
+   	    text-align: center;
+   }
+
+</style>
+</head>
+
+<body onload="load_new()">
+	<div class="container">
+		<div class="jumbotron">
+			<h1 align="center">xkcd</h1>
+            <p align="center">Clone of xkcd -A webcomic of romance,sarcasm, math, and language.</p>
+        </div>
+        
+        <div class="main-container">
+	        <div class="panel panel-default">
+		        <h3 align="center" id="title"> Title </h3>
+		        <div class="buttons">
+		        	<button type="button" class="btn btn-info" btn-md onclick="first()" > |< </button>
+                    <button type="button" class="btn btn-info" btn-md onclick="prev()"> Prev </button>
+                    <button type="button" class="btn btn-info" btn-md onclick="random()"> Random </button>
+                    <button type="button" class="btn btn-info" btn-md onclick="next()"> Next </button>
+                    <button type="button" class="btn btn-info" btn-md onclick="last()"> >| </button>
+		        </div>
+		        <div class="panel-body" id="image">
+		        	<!--<img src="" class="img-thumbnail" alt="">-->
+		        </div>
+		        <div class="buttons">
+		        	<button type="button" class="btn btn-info" btn-md onclick="first()" > |< </button>
+                    <button type="button" class="btn btn-info" btn-md onclick="prev()"> Prev </button>
+                    <button type="button" class="btn btn-info" btn-md onclick="random()"> Random </button>
+                    <button type="button" class="btn btn-info" btn-md onclick="next()"> Next </button>
+                    <button type="button" class="btn btn-info" btn-md onclick="last()"> >| </button>
+		        </div>
+	        </div>
+        </div>
+        <!--
+        <div class="footer">
+        	<div class="panel panel-default">
+        		<h4>Randall Munroe is the creator of webcomic xkcd.He is a Nasa contract programmer turned cartoonist. All hail Randall Munroe!</h4>
+        	</div>
+        </div>
+        -->
+
+    </div>
+
+    <script>
+
+    	var no="";
+
+    	$(document).ready(function() {
+    		
+    		no="";
+    		load_new();
+    	});
+
+
+    	function random()
+    	{
+    		var randomNo = Math.floor(Math.random() * 2053) + 1;
+            no=randomNo;
+            load_new();
+    	}
+
+    	function prev()
+    	{
+    		if(no == "")
+    			no=2054;
+    		if(parseInt(no) > 1){
+	            no--;
+	            load_new();
+            }
+    	}
+
+    	function next()
+    	{
+    		if(no == " ")
+    			no=2054;
+            if( parseInt(no) < 2053)
+            {
+	            no++;
+	            load_new();
+            }
+    	}
+
+    	function first()
+    	{
+            no=1;
+            load_new();
+    	}
+
+    	function last()
+    	{
+            no="";
+            load_new();
+    	}
+
+
+        function load_new()
+        {
+	    	var xhttp = new XMLHttpRequest();
+	        xhttp.onreadystatechange = function(){
+	        //function load_new(int no) 
+	        //{
+	        	
+	            if (this.readyState == 4 && this.status == 200) {
+		            var response = JSON.parse(xhttp.responseText);
+		            var json_num = response.num;        //last-2054
+		            var json_img = response.img;
+		            var json_title=response.title;
+		            var json_alt=response.alt;
+
+		            document.getElementById('image').innerHTML='<img src="'+json_img+'" alt="'+json_alt+'">'
+		            document.getElementById('title').innerHTML = json_title;
+	            }
+	        };
+	        
+	        var path="http://xkcd.com/"+no+"/info.0.json";
+	    	xhttp.open("GET",path,true);
+	        xhttp.send();
+        }
+
+    </script>
+
+
+</body>
+</html>
